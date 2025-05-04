@@ -34,12 +34,14 @@ def handle_text(message):
         btn_photo4 = telebot.types.InlineKeyboardButton(text='Виктория Ратгольц', callback_data='ratholz')
         btn_photo5 = telebot.types.InlineKeyboardButton(text='Фиги в книге', callback_data='figi')
         btn_photo6 = telebot.types.InlineKeyboardButton(text='Кота почитай', callback_data='kota_pochitay')
+        btn_photo7 = telebot.types.InlineKeyboardButton(text='Литературное сообщество «Бродский»', callback_data='brodskiy')
         markup.add(btn_photo1)
         markup.add(btn_photo2)
         markup.add(btn_photo3)
         markup.add(btn_photo4)
         markup.add(btn_photo5)
         markup.add(btn_photo6)
+        markup.add(btn_photo7)
 
         bot.send_message(message.chat.id, "Выбери книжного человека:", reply_markup=markup)
 
@@ -70,16 +72,26 @@ def handle_text(message):
         markup = telebot.types.InlineKeyboardMarkup()
         btn_event1 = telebot.types.InlineKeyboardButton(text='Книжный клуб «Кот учёный»', callback_data='cat_uch')
         btn_event2 = telebot.types.InlineKeyboardButton(text='Клуб для психологов', callback_data='psyclub')
+        btn_event3 = telebot.types.InlineKeyboardButton(text='квесты «Кативквадрате»', callback_data='kativkvadtare')
+        btn_event4 = telebot.types.InlineKeyboardButton(text='Vita Nouva', callback_data='vita_nouva')
         markup.add(btn_event1)
         markup.add(btn_event2)
+        markup.add(btn_event3)
+        markup.add(btn_event4)
 
         bot.send_message(message.chat.id, "Выбери мероприятие:", reply_markup=markup)
     elif message.text == 'Библиотеки':
-        # markup = telebot.types.InlineKeyboardMarkup()
-        # btn_lib1 = telebot.types.InlineKeyboardButton(text='Библиотека1', callback_data='lib1')
-        # markup.add(btn_lib1)
+        markup = telebot.types.InlineKeyboardMarkup()
+        btn_lib1 = telebot.types.InlineKeyboardButton(text='Центральная библиотека имени Некрасова', callback_data='nekrasova')
+        btn_lib3 = telebot.types.InlineKeyboardButton(text='Краснодарская краевая детская библиотека имени братьев Игнатовых',
+                                                      callback_data='ignatovyh')
+        btn_lib2 = telebot.types.InlineKeyboardButton(text='Краснодарская краевая универсальная научная библиотека имени А.С. Пушкина',
+                                                      callback_data='pushkina')
+        markup.add(btn_lib1)
+        markup.add(btn_lib2)
+        markup.add(btn_lib3)
 
-        bot.send_message(message.chat.id, "Извините, данный раздел находится в разработке.")
+        bot.send_message(message.chat.id, "Выбери библиотеку:", reply_markup=markup)
 
 
 
@@ -140,6 +152,12 @@ def handle_callback(call):
                 InputMediaPhoto(open("img/kota_pochitay2.jpg", "rb")),
             ]
             bot.send_media_group(call.message.chat.id, photo_kota_pochitay)
+        elif call.data == 'brodskiy':
+            bot.send_photo(call.message.chat.id, open("img/brodskiy.jpg", "rb"),
+                           caption='<b>Литературное сообщество «Бродский»</b>\n\n'
+                                   'Книжный клуб, который вышел за рамки клуба и стал амбассадором книжных Сочи и Краснодара. '
+                                   'Собирают вокруг себя гурманов и организовывают благотворительные распродажи.\n\n'
+                                   'тгк: https://t.me/brodskiy_tvoibro', parse_mode='html')
         #PLACES
         elif call.data == 'polka':
             photo_polka = [
@@ -264,6 +282,17 @@ def handle_callback(call):
                 InputMediaPhoto(open("img/cat_uch2.jpg", "rb")),
             ]
             bot.send_media_group(call.message.chat.id, photo_izd)
+        elif call.data == 'vita_nouva':
+            photo_vita_nouva = [
+                InputMediaPhoto(open("img/vita_nouva1.jpg", "rb"),
+                                caption="<b>Vita Nouva</b>\n"
+                                        "Новые знания — новая жизнь!\nСеминары, культурные мероприятия\n"
+                                        "Для любителей литературы и не только\nИзучай афишу и регистрируйся \n\n"
+                                        "тгк: https://t.me/vita_nuova",
+                                parse_mode='html'),
+                InputMediaPhoto(open("img/vita_nouva2.jpg", "rb")),
+            ]
+            bot.send_media_group(call.message.chat.id, photo_vita_nouva)
         elif call.data == 'psyclub':
             photo_psyclub = [
                 InputMediaPhoto(open("img/psyclub1.jpg", "rb"),
@@ -274,19 +303,43 @@ def handle_callback(call):
                 InputMediaPhoto(open("img/psyclub2.jpg", "rb")),
             ]
             bot.send_media_group(call.message.chat.id, photo_psyclub)
+        elif call.data == 'kativkvadtare':
+            bot.send_photo(call.message.chat.id, open("img/kativkvadtare.jpg", "rb"),
+                           caption='<b>квесты «Кативквадрате»</b>\n\n'
+                                   'Проводят квесты для детей по мотивам литературных произведений\n\n '
+                                   'тгк: https://t.me/katy_v_kvadrate', parse_mode='html')
 
         #LIBS
-        elif call.data == 'lib1':
-                    photo_izd = [
-                        InputMediaPhoto(open("izd1.jpg", "rb"),
-                            caption="<b>Кафе «Издательство»</b>\n\n"
-                                "Книги, шахматы, настольные игры и латте «Вишнёвый сад». "
-                                "Кстати, чек вам могут подать в томике книги.\n\n"
-                                "<b>Адрес:</b> ул. Зиповская, 38/ ул. Ставропольская, 226\n"
-                                "<b>Режим работы:</b> \nбудни: 8:00-23:00\nсб-вс: 9:00-23:00\n\n", parse_mode='html'),
-                        InputMediaPhoto(open("izd2.jpg", "rb")),
-                    ]
-                    bot.send_media_group(call.message.chat.id, photo_izd)
+        elif call.data == 'nekrasova':
+            bot.send_photo(call.message.chat.id, open("img/nekrasova.jpg", "rb"),
+                           caption='<b>Центральная библиотека имени Некрасова</b>\n\n'
+                                   'Это не просто библиотека, это место где происходит очень много интересных вещей и событий. '
+                                   'Библионочь, киноночь, разного рода мероприятия и книжные клубы. '
+                                   'Также это одно из немногих мест откуда можно получить доступ к президентской '
+                                   'библиотеке.\n\n<b>Адрес:</b> ул. Красная, 87\n\n'
+                                   '<b>сайт:</b> https://neklib.kubannet.ru/', parse_mode='html')
+        elif call.data == 'ignatovyh':
+            bot.send_photo(call.message.chat.id, open("img/ignatovyh.jpg", "rb"),
+                           caption='<b>Краснодарская краевая детская библиотека имени братьев Игнатовых</b>\n\n'
+                                   'Крупная, с множеством отделов и залов библиотека для детей.  Много мастер-классов, '
+                                   'к примеру, по знакомству и изготовлению диафильма.\n\n'
+                                   '<b>Адрес:</b>  ул. Красная, 26/1\n'
+                                   '<b>сайт:</b> https://www.ignatovka.ru/', parse_mode='html')
+        elif call.data == 'pushkina':
+            photo_pushkina = [
+                InputMediaPhoto(open("img/pushkina1.jpg", "rb"),
+                    caption="<b>Краснодарская краевая универсальная научная библиотека имени А.С. Пушкина</b>\n\n"
+                        "Библиотека с обширным книжным фондом, в том числе в электронном виде. При наличии читательского "
+                        "билета можно бесплатно зарегистрироваться на ЛитРес и брать в удобном формате "
+                        "электронные книги из фонда. Архивные фото, газеты, пластинки, помощь в подборе "
+                        "литературы для научных и студенческих работ и богатый научный фонд.\n"
+                        "Сюда стекаются все издания края в обязательном экземпляре.\n\n"
+                        "<b>Адрес:</b> ул. Красная, 8\n"
+                        "<b>Сайт:</b> http://pushkin.kubannet.ru/\n"
+                        "<b>тгк:</b> https://t.me/pushkinka_krd", parse_mode='html'),
+                InputMediaPhoto(open("img/pushkina2.jpg", "rb")),
+            ]
+            bot.send_media_group(call.message.chat.id, photo_pushkina)
 
         bot.answer_callback_query(call.id)
     except Exception as e:
