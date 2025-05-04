@@ -294,4 +294,6 @@ def handle_callback(call):
         bot.send_message(call.message.chat.id, "Произошла ошибка при загрузке фото")
 
 
-bot.infinity_polling()
+if __name__ == '__main__':
+    bot.remove_webhook()
+    bot.set_webhook(url=os.getenv('WEBHOOK_URL') + '/webhook')
